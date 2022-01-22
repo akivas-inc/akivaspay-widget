@@ -155,13 +155,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: black;
+      background: rgba(0, 0, 0, 0.8);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1rem;
-      background: var(--black);
-      cursor: pointer;
       visibility: hidden;
       opacity: 0;
       transition: all 0.35s ease-in;
@@ -204,11 +202,15 @@
       right: 0;
       top: 0;
       color: white;
-      font-size: x-large;
       margin: 10px;
-      font-weight: normal;
       border-color: transparent;
-      background-color: transparent;
+      background-color: rgba(0, 0, 0, 0.7);
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       cursor: pointer;
     }
@@ -222,8 +224,7 @@
     }
     
     
-    /* ANIMATIONS
-    â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“ */
+    /* ANIMATIONS */
     [data-animation] .apay-qr-modal-dialog {
       opacity: 0;
       transition: all 0.5s var(--bounceEasing);
