@@ -1,13 +1,12 @@
-# akivaspay-widget
-    It's a widget that can be embedded in every website to accept akivasPay payments.
+# akivaspay widget
+It's a widget that can be embedded in every website to accept akivasPay payments.
 
-# Install
+## Install
 ```
-    npm install git+ssh://git@github.com/akivas-inc/akivaspay-widget.git
+npm install git+ssh://git@github.com/akivas-inc/akivaspay-widget.git
 ```
-
-# Usage
-The widget needs to be initialize with your shop subscription key, which you can get from the (https://test.akivaspay.com/)[dasboard]
+## Usage
+The widget needs to be initialize with your shop subscription key, which you can get from the [dashboard](https://test.akivaspay.com).
 
 ```js
 // import akivaspay widget
