@@ -1,0 +1,26 @@
+{
+  "name": "akivaspay-widget",
+  "version": "1.0.0",
+  "description": "It's a widget that can be embedded in every website to accept akivasPay payments.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akivas-inc/akivaspay-widget.git"
+  },
+  "keywords": [
+    "payment",
+    "qrcode",
+    "wallet",
+    "akivaspay",
+    "apay"
+  ],
+  "author": "Jordy Parker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akivas-inc/akivaspay-widget/issues"
+  },
+  "homepage": "https://github.com/akivas-inc/akivaspay-widget#readme"
+}
