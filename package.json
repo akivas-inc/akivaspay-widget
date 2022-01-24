@@ -2,9 +2,14 @@
   "name": "akivaspay-widget",
   "version": "1.0.0",
   "description": "It's a widget that can be embedded in every website to accept akivasPay payments.",
-  "main": "index.js",
+  "source": "src/index.js",
+  "main": "dist/main.js",
+  "module": "dist/module.js",
+  "style": "dist/index.css",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "parcel watch",
+    "build": "parcel build",
+    "dev": "npx parcel src/index.html"
   },
   "repository": {
     "type": "git",
@@ -22,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/akivas-inc/akivaspay-widget/issues"
   },
-  "homepage": "https://github.com/akivas-inc/akivaspay-widget#readme"
+  "homepage": "https://github.com/akivas-inc/akivaspay-widget#readme",
+  "devDependencies": {
+    "parcel": "^2.2.1"
+  }
 }

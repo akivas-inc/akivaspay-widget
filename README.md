@@ -9,8 +9,11 @@ npm install git+ssh://git@github.com/akivas-inc/akivaspay-widget.git
 The widget needs to be initialize with your shop subscription key, which you can get from the [dashboard](https://test.akivaspay.com).
 
 ```js
-// import akivaspay widget
+// ES6 Modules or TypeScript
 import AkivasPayWidget from "akivaspay-widget"
+
+// CommonJS
+const AkivasPayWidget = require('akivaspay-widget')
 
 // create an instance of akivaspay widget
 const widget = new AkivasPayWidget(

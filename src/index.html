@@ -1,0 +1,20 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Apay Widget</title>
+  </head>
+  <body>
+    <button id="apay">apay</button>
+  </body>
+  <script type="module">
+        import AkivasPayWidget from "./../dist/module.js"
+        const widget = new AkivasPayWidget(
+            'apayo3qglb76hpitvymz9w5ks2jac810d'
+        );
+    
+        document.getElementById('apay').addEventListener('click', () => {
+            widget.show('pen', 'sdsdsdsdsdsd', '1000')
+        })
+        
+  </script>
+</html>
