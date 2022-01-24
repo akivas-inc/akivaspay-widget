@@ -9,6 +9,8 @@ const sleep = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+const supported_locales = ['en', 'fr'];
+const fallback_locale = 'en';
 const formatCurrency = (number, separator) => {
     if (number) {
         let splitArray = number.toString().split('.')
@@ -43,5 +45,7 @@ export {
     sleep,
     STATUS_OF_REQUEST,
     formatCurrency,
-    Response
+    Response,
+    supported_locales,
+    fallback_locale
 }
