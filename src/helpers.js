@@ -1,11 +1,12 @@
 import { Localization } from "./translations.js";
 
 const STATUS_OF_REQUEST = Object.freeze({
-    INITIALIZING: 'initializing',
+    NOT_STARTED: 'not started',
     WAITING: 'waiting',
     LOADING: 'loading',
     FAILED: 'failed',
-    SUCCESS: 'success'
+    SUCCESS: 'success',
+    CANCEL: 'cancel'
 });
 
 const supported_locales = ['en', 'fr'];
@@ -34,9 +35,9 @@ const formatCurrency = (number, separator) => {
     }
 }
 
-class Response {
-    constructor(image, domain, link, name, amount){
-        Object.assign(this, { image, domain, link, name, amount });
+class WidgetData {
+    constructor(image, domain, link, name, amount, description, external_id){
+        Object.assign(this, { image, domain, link, name, amount, description, external_id });
     }
 }
 
@@ -77,13 +78,26 @@ const timerSection = (expired, requestStatus, locale) => `
     </div>
 `;
 
+function createPrivateStore () {
+    let store = new WeakMap();
+    return function (inst) {
+        let obj = store.get(inst);
+        if (!obj) {
+            obj = {};
+            store.set(inst, obj);
+        };
+        return obj;
+    };
+}
+
 export {
     STATUS_OF_REQUEST,
     formatCurrency,
-    Response,
+    WidgetData,
     supported_locales,
     fallback_locale,
     widgetHeader,
     timerSection,
-    Localization
+    Localization,
+    createPrivateStore
 }

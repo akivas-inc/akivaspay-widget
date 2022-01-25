@@ -10,13 +10,8 @@
     import AkivasPayWidget from "./../dist/main.js"
 
     const widget = new AkivasPayWidget(
-      'apayxr5qvh4i823asczm1ewkjp6ofgdbt'
+      'YOUR_SHOP_SUBCRIPTION_KEY'
     );
-
-    widget.on('apay-regenerate-widget', () => {
-      console.log('regeggggg')
-      widget.regenerate('pen', 'sdsdsdsdsdsd', '50');
-    })
 
     widget.on('apay-transaction-success', (transaction) => {
       console.log(transaction);

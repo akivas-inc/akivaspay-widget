@@ -26,15 +26,6 @@ widget.on('apay-transaction-success', (transaction) => {
     console.log(transaction);
 })
 
-// subscribe to apay-regenerate-widget event to generate a new widget when the old one expired
-widget.on('apay-regenerate-widget', () => {
-    widget.regenerate(
-        'Pen', 
-        'NEW_EXTERNAL_ID', // new external id
-        '100' // same amount of the previous qr code amount
-    );
-})
-
 // call the widget
 widget.generate(
     'Pen', // name of the qrcode
