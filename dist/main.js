@@ -4,23 +4,47 @@ function $parcel$export(e, n, v, s) {
   Object.defineProperty(e, n, {get: v, set: s, enumerable: true, configurable: true});
 }
 
-$parcel$export(module.exports, "AkivasPayWidget", () => $4fa36e821943b400$export$defd62c0a9a12f72, (v) => $4fa36e821943b400$export$defd62c0a9a12f72 = v);
-const $20b4a97a61b3fccb$export$b9ca24a255e1ad7a = Object.freeze({
+$parcel$export(module.exports, "AkivasPayWidget", () => $debc315a2be2d942$export$defd62c0a9a12f72, (v) => $debc315a2be2d942$export$defd62c0a9a12f72 = v);
+const $0d8a3a7d0b18547c$var$translations = {
+    "en": {
+        "qr-code-expired": "The Qrcode has expired",
+        "scan-to-pay": "Scan to pay",
+        "open-in-wallet": "Open in Wallet",
+        "how-to-pay": "How do i pay?",
+        "awaiting-payment": "Awaiting Payment ...",
+        "successful-purchase-msg": "The payment has been successfully completed",
+        "regenerate": "regenerate"
+    },
+    "fr": {
+        "qr-code-expired": "Le Qrcode a expiré",
+        "scan-to-pay": "Scannez pour payer",
+        "open-in-wallet": "Ouvrir dans le portefeuille",
+        "how-to-pay": "Comment payer ?",
+        "awaiting-payment": "En attente de paiement...",
+        "successful-purchase-msg": "Le paiement a été effectué avec succès",
+        "regenerate": "régénérer"
+    }
+};
+class $0d8a3a7d0b18547c$export$b6fc69901997e05 {
+    static get(locale, key) {
+        return $0d8a3a7d0b18547c$var$translations[locale][key];
+    }
+}
+
+
+const $2657731041a91f20$export$b9ca24a255e1ad7a = Object.freeze({
     INITIALIZING: 'initializing',
     WAITING: 'waiting',
     LOADING: 'loading',
-    FAILED: 'failed'
+    FAILED: 'failed',
+    SUCCESS: 'success'
 });
-const $20b4a97a61b3fccb$export$e772c8ff12451969 = (ms)=>{
-    return new Promise((resolve)=>setTimeout(resolve, ms)
-    );
-};
-const $20b4a97a61b3fccb$export$231a189a075bf5ec = [
+const $2657731041a91f20$export$231a189a075bf5ec = [
     'en',
     'fr'
 ];
-const $20b4a97a61b3fccb$export$66c8564ff9f24ca2 = 'en';
-const $20b4a97a61b3fccb$export$3dc27271f5d5c629 = (number, separator)=>{
+const $2657731041a91f20$export$66c8564ff9f24ca2 = 'en';
+const $2657731041a91f20$export$3dc27271f5d5c629 = (number, separator)=>{
     if (number) {
         let splitArray = number.toString().split('.');
         let decimalPart = '';
@@ -39,7 +63,7 @@ const $20b4a97a61b3fccb$export$3dc27271f5d5c629 = (number, separator)=>{
         return currency + decimalPart;
     } else return "0";
 };
-class $20b4a97a61b3fccb$export$9f633d56d7ec90d3 {
+class $2657731041a91f20$export$9f633d56d7ec90d3 {
     constructor(image, domain, link, name, amount){
         Object.assign(this, {
             image: image,
@@ -50,54 +74,63 @@ class $20b4a97a61b3fccb$export$9f633d56d7ec90d3 {
         });
     }
 }
+const $2657731041a91f20$export$1cf57cfcc6726c1e = (content = '')=>`
+    <div id="apBoxHeader">
+        <div id="apLogo">
+            <div id="apLogoCircle">
+                <img src="https://api.apay.akivaspay.com/images/AKIVASPAY.png" alt="AkivasPay" />
+            </div>
+            <div id="apLogoText">AkivasPay</div>
+        </div>
+        ${content}
+    </div>
+`
+;
+const $2657731041a91f20$export$c31d0b96a47b16ab = (expired, requestStatus, locale)=>`
+    <div id="apTimer" style="background-color: ${expired ? 'red' : '#3cb364'}">
+        ${expired == true ? `
+                <span id="apTimerText">
+                    <span id="apTimerText-left"> ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(locale, 'qr-code-expired')}</span>
+                    <span id="apTimerText-right"> 
+                        <span id="timer"></span> 
+                    </span>
+                </span>
+            ` : requestStatus == $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING ? `
+                <span id="apTimerMovement"></span>
+                <span id="apTimerText">
+                    <span id="apTimerText-left"> ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(locale, 'awaiting-payment')} </span>
+                    <span id="apTimerText-right"> 
+                        <span id="timer"></span> 
+                    </span>
+                </span>
+            ` : ''}
+    </div>
+`
+;
 
 
-const $165a57180b7edd0a$var$translations = {
-    "en": {
-        "qr-code-expired": "The Qrcode has expired",
-        "scan-to-pay": "Scan to pay",
-        "open-in-wallet": "Open in Wallet",
-        "how-to-pay": "How do i pay?",
-        "awaiting-payment": "Awaiting Payment ...",
-        "successful-purchase-msg": "The payment has been successfully completed"
-    },
-    "fr": {
-        "qr-code-expired": "Le Qrcode a expiré",
-        "scan-to-pay": "Scannez pour payer",
-        "open-in-wallet": "Ouvrir dans le portefeuille",
-        "how-to-pay": "Comment payer ?",
-        "awaiting-payment": "En attente de paiement...",
-        "successful-purchase-msg": "Le paiement a été effectué avec succès"
-    }
-};
-class $165a57180b7edd0a$export$b6fc69901997e05 {
-    static get(locale, key) {
-        return $165a57180b7edd0a$var$translations[locale][key];
-    }
-}
 
-
-
-class $4fa36e821943b400$export$defd62c0a9a12f72 {
+class $debc315a2be2d942$export$defd62c0a9a12f72 {
     baseUrl = "https://api.apay.akivaspay.com/";
     shopSubscriptionKey;
-    cancel = false;
-    success = false;
-    requestStatus = $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.INITIALIZING;
+    success = true;
+    requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.INITIALIZING;
     timeExpired = false;
     errorMessage = '';
     locale;
     apayContainer;
     modal;
-    response = new $20b4a97a61b3fccb$export$9f633d56d7ec90d3();
-    interval;
+    response = new $2657731041a91f20$export$9f633d56d7ec90d3();
+    checkTransactionInterval;
+    timerInterval;
     events = {
-        'apay-transaction': []
+        'apay-transaction-success': [],
+        'apay-regenerate-widget': []
     };
-    constructor(shopSubscriptionKey, locale = $20b4a97a61b3fccb$export$66c8564ff9f24ca2){
+    constructor(shopSubscriptionKey, locale = $2657731041a91f20$export$66c8564ff9f24ca2){
         this.shopSubscriptionKey = shopSubscriptionKey;
-        if (locale in $20b4a97a61b3fccb$export$231a189a075bf5ec) this.locale = locale;
-        else this.locale = $20b4a97a61b3fccb$export$66c8564ff9f24ca2;
+        if (locale in $2657731041a91f20$export$231a189a075bf5ec) this.locale = locale;
+        else this.locale = $2657731041a91f20$export$66c8564ff9f24ca2;
         this.apayContainer = document.createElement('div');
         this.initWidget();
     }
@@ -106,26 +139,39 @@ class $4fa36e821943b400$export$defd62c0a9a12f72 {
         document.querySelector('body').appendChild(this.apayContainer);
         this.modal = document.getElementById("akivaspayModal");
     }
-    closeWidgetEventListener() {
-        const closeEl = document.getElementById('apay-close-btn');
-        if (closeEl) closeEl.addEventListener('click', ()=>{
-            this.closeWidget();
+    regenerateCodeClickEventListener() {
+        const regenerateBtn = document.getElementById('apay-regenerate');
+        if (regenerateBtn != null && this.timeExpired) regenerateBtn.addEventListener('click', ()=>{
+            this.emit('apay-regenerate-widget');
+        });
+    }
+    closeClickEventListener() {
+        const closeElts = Object.values(document.getElementsByClassName('apay-close-widget'));
+        if (closeElts.length > 0) closeElts.forEach((el)=>{
+            el.addEventListener('click', ()=>{
+                this.closeWidget();
+            });
         });
     }
     updateWidget() {
         this.modal.innerHTML = this.getWidget();
-        this.closeWidgetEventListener();
+        this.closeClickEventListener();
     }
     showModal() {
         this.modal.innerHTML = this.getWidget();
-        this.closeWidgetEventListener();
+        this.closeClickEventListener();
     }
-    async show(name, external_uuid, amount, description = '') {
-        this.requestStatus = $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.LOADING;
+    async regenerate(name, external_uuid, amount, description = '') {
+        this.timeExpired = false;
+        this.success = false;
+        this.errorMessage = '';
+        this.generate(name, external_uuid, amount, description);
+    }
+    async generate(name, external_uuid, amount, description = '') {
+        this.requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.LOADING;
         this.modal.classList.add('visible');
         this.showModal();
         let data = {
-            "shop-subscription-key": this.shopSubscriptionKey,
             "name": name,
             "uuid": external_uuid,
             "amount": amount,
@@ -136,57 +182,42 @@ class $4fa36e821943b400$export$defd62c0a9a12f72 {
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                "Accept-Language": this.locale
+                "Accept-Language": this.locale,
+                "Shop-Subscription-Key": this.shopSubscriptionKey
             },
             body: JSON.stringify(data)
         });
         if (response.ok) response.json().then((json)=>{
-            this.response = new $20b4a97a61b3fccb$export$9f633d56d7ec90d3(json.image, json.domain, json.link, name, amount);
-            this.requestStatus = $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.WAITING;
+            this.response = new $2657731041a91f20$export$9f633d56d7ec90d3(json.image, json.domain, json.link, name, amount);
+            this.requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING;
             this.updateWidget();
-            document.getElementById('timer').innerHTML = "30:0";
-            this.startTimer().then();
+            var timer = document.getElementById('timer');
+            timer.textContent = "30:0";
+            this.startTimer();
             this.checkTransactionStatus(json.uuid).then();
         });
         else response.json().then((json)=>{
-            this.requestStatus = $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.FAILED;
+            this.requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.FAILED;
             this.errorMessage = json.message;
             this.updateWidget();
         });
     }
     getWidget() {
+        const timerHTML = $2657731041a91f20$export$c31d0b96a47b16ab(this.timeExpired, this.requestStatus, this.locale);
         var $content = `
-            <div class="apay-center-content" style="visibility: ${this.requestStatus === $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.LOADING ? 'visible' : 'hidden'}">
+            <div class="apay-center-content" style="visibility: ${this.requestStatus === $2657731041a91f20$export$b9ca24a255e1ad7a.LOADING ? 'visible' : 'hidden'}">
                 <div id="apay-loading"></div>
             </div>
-            <div class="apay-center-content" style="text-align: center; color: red; visibility: ${this.requestStatus === $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.FAILED ? 'visible' : 'hidden'}">
+            <div class="apay-center-content" style="text-align: center; color: red; visibility: ${this.requestStatus === $2657731041a91f20$export$b9ca24a255e1ad7a.FAILED ? 'visible' : 'hidden'}">
                 ${this.errorMessage}
             </div>
-            <div class="apay-widget" style="visibility: ${this.requestStatus === $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.WAITING ? 'visible' : 'hidden'}">
+            <div data-animation="slideInOutLeft" class="apay-widget apay-overflow-scroll-container" style="visibility: ${this.requestStatus === $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING ? 'visible' : 'hidden'}">
                 <div id="apBox">
-                    <div id="apBoxHeader">
-                        <div id="apLogo">
-                            <div id="apLogoCircle">
-                                <img src="./../images/akivaspay.png" alt="AkivasPay" />
-                            </div>
-                            <div id="apLogoText">AkivasPay</div>
-                        </div>
-                        <div id="apTimer">
-                            <div style="background-color: ${this.timeExpired ? 'red' : 'transparent'}">
-                                <span id="apTimerMovement"></span>
-                                <span id="apTimerText">
-                                    <span id="apTimerText-left"> ${this.timeExpired ? $165a57180b7edd0a$export$b6fc69901997e05.get(this.locale, 'qr-code-expired') : this.success ? $165a57180b7edd0a$export$b6fc69901997e05.get(this.locale, 'successful-purchase-msg') : $165a57180b7edd0a$export$b6fc69901997e05.get(this.locale, 'awaiting-payment')} </span>
-                                    <span id="apTimerText-right"> 
-                                        <span id="timer"></span> 
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    ${$2657731041a91f20$export$1cf57cfcc6726c1e(timerHTML)}
                     <div id="apPrice">
                         <div>
                             <p id="apScantoPayText" style="font-weight: 400; color: 989898">
-                                ${$165a57180b7edd0a$export$b6fc69901997e05.get(this.locale, 'scan-to-pay')}
+                                ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(this.locale, 'scan-to-pay')}
                             </p>
                     
                             <p id="apTo" style="font-weight: 300">
@@ -196,18 +227,18 @@ class $4fa36e821943b400$export$defd62c0a9a12f72 {
                             </p>
                         </div>
                         <div style="color: black">
-                            <span style="font-size: 20px; font-weight: 400"> ${$20b4a97a61b3fccb$export$3dc27271f5d5c629(this.response.amount)}</span>
+                            <span style="font-size: 20px; font-weight: 400"> ${$2657731041a91f20$export$3dc27271f5d5c629(this.response.amount)}</span>
                             <sup style="font-weight: 500">FCFA</sup>
                         </div>
                     </div>
-                    <div id="apBoxBody" style="padding-right: 10px">
-                        <h3 style="font-weight: bold; text-align: center; margin-top:10px; padding-left: 10px;">${this.response.name}</h3>
+                    <div id="apBoxBody">
+                        <h1 class="apay-qr-name">${this.response.name}</h1>
                         <div id="apQrcodeBox">
-                            <img src="${this.response.image}" width="150" height="150" alt="qrcode" style="visibility: ${!this.timeExpired && this.requestStatus === $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.WAITING ? 'visible' : 'hidden'}"/>
+                            <img src="${this.response.image}" alt="qrcode" style="visibility: ${!this.timeExpired && this.requestStatus === $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING ? 'visible' : 'hidden'}"/>
                         </div>
-                        <a id="howToPay" href="https://test.akivaspay.com/client-documentation/web-payment" target="_blank">${$165a57180b7edd0a$export$b6fc69901997e05.get(this.locale, 'how-to-pay')}</a>
+                        <a id="howToPay" href="https://test.akivaspay.com/client-documentation/web-payment" target="_blank">${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(this.locale, 'how-to-pay')}</a>
                         <a href="${this.response.link}" class="apay-button" target="_blank">
-                            ${$165a57180b7edd0a$export$b6fc69901997e05.get(this.locale, 'open-in-wallet')}
+                            ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(this.locale, 'open-in-wallet')}
                         </a>
                         <br />
                     </div>
@@ -217,14 +248,7 @@ class $4fa36e821943b400$export$defd62c0a9a12f72 {
         if (this.success) $content = `
                 <div class="apay-widget">
                     <div id="apBox">
-                        <div id="apBoxHeader">
-                            <div id="apLogo">
-                                <div id="apLogoCircle">
-                                    <img src="./../images/akivaspay.png" alt="AkivasPay" />
-                                </div>
-                                <div id="apLogoText">AkivasPay</div>
-                            </div>
-                        </div>
+                        ${$2657731041a91f20$export$1cf57cfcc6726c1e(timerHTML)}
                         <div id="apay-success-content">
                             <div class="apay-success-checkmark">
                                 <div class="check-icon">
@@ -235,87 +259,138 @@ class $4fa36e821943b400$export$defd62c0a9a12f72 {
                                 </div>
                             </div>
                             <h3 class="apay-text-success">Sucessfull purchase</h3>
-                            <button class="apay-sucess-button">
+                            <a href="#" class="apay-sucess-button apay-close-widget">
                                 ok
-                            </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        else if (this.timeExpired) $content = `
+                <div class="apay-widget">
+                    <div id="apBox">
+                        ${$2657731041a91f20$export$1cf57cfcc6726c1e(timerHTML)}
+                        <div id="apPrice">
+                            <div>
+                                <p id="apScantoPayText" style="font-weight: 400; color: 989898">
+                                    ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(this.locale, 'scan-to-pay')}
+                                </p>
+                        
+                                <p id="apTo" style="font-weight: 300">
+                                    <strong style="font-weight: 400; color: 607d8b"
+                                    >${this.response.domain}</strong
+                                    >
+                                </p>
+                            </div>
+                            <div style="color: black">
+                                <span style="font-size: 20px; font-weight: 400"> ${$2657731041a91f20$export$3dc27271f5d5c629(this.response.amount)}</span>
+                                <sup style="font-weight: 500">FCFA</sup>
+                            </div>
+                        </div>
+                        <div id="apBoxBody">
+                            <div id="apQrcodeBox">
+                                <span style="color: red;">
+                                    ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(this.locale, 'qr-code-expired')}
+                                </span>
+                            </div>
+                            <a href="#" id="apay-regenerate" class="apay-button">
+                                ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(this.locale, 'regenerate')}
+                            </a>
+                            <br />
                         </div>
                     </div>
                 </div>
             `;
         return `
             <div>
-                <button id="apay-close-btn">
+                <button id="apay-close-btn" class="apay-close-widget">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
                 <div>
-                    ${$content}
+                ${$content}
                 </div>
             </div>
         `;
     }
     async checkTransactionStatus(uuid) {
-        if ((this.cancel || this.timeExpired) && this.interval !== null) clearInterval(this.interval);
-        this.interval = setInterval(async ()=>{
-            var response = await fetch(this.baseUrl + 'find/transaction/' + uuid + "?filter_by=uuid&shop-subscription-key=" + this.shopSubscriptionKey, {
+        this.checkTransactionInterval = setInterval(async ()=>{
+            if (this.timeExpired && this.checkTransactionInterval !== null) {
+                clearInterval(this.checkTransactionInterval);
+                return;
+            }
+            var response = await fetch(this.baseUrl + 'find/transaction/' + uuid + "?filter_by=uuid", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
-                    "Accept-Language": this.locale
+                    "Accept-Language": this.locale,
+                    "Shop-Subscription-Key": this.shopSubscriptionKey
                 }
             });
-            if (response.status == 200) {
-                this.success = true;
-                this.updateWidget();
-                this.emit('apay-transaction', response);
-            } else if (response.status == 406) ;
+            if (response.status == 200) response.json().then((json)=>{
+                if (json.success == true) {
+                    this.success = true;
+                    this.timeExpired = false;
+                    this.requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.SUCCESS;
+                    this.updateWidget();
+                    this.emit('apay-transaction-success', json);
+                    clearInterval(this.checkTransactionInterval);
+                }
+            });
             else response.json().then((json)=>{
-                this.requestStatus = $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.FAILED;
+                this.requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.FAILED;
                 this.errorMessage = json.message;
                 this.updateWidget();
-                clearInterval(this.interval);
+                clearInterval(this.checkTransactionInterval);
             });
         }, 2500);
     }
-    async startTimer() {
-        try {
-            let timer = document.getElementById('timer').innerHTML;
-            let timeArray = timer.split(/[:]+/);
-            let m = timeArray[0];
-            let s = $4fa36e821943b400$export$defd62c0a9a12f72.checkSecond(timeArray[1] - 1);
-            if (s === "59") m = m - 1;
-            if (this.success) return;
-            if (m < 0) {
-                this.timeExpired = true;
-                this.updateWidget();
-                return;
+    startTimer() {
+        this.timerInterval = setInterval(()=>{
+            try {
+                let timer = document.getElementById('timer').innerHTML;
+                let timeArray = timer.split(/[:]+/);
+                let m = parseInt(timeArray[0]);
+                let s = $debc315a2be2d942$export$defd62c0a9a12f72.formatSeconds(parseInt(timeArray[1] - 1));
+                if (s === '59') m = m - 1;
+                if (this.success) clearInterval(this.timerInterval);
+                if (m < 0 || m === 0 && s === '00') {
+                    this.timeExpired = true;
+                    document.getElementById('timer').textContent = "";
+                    this.updateWidget();
+                    this.regenerateCodeClickEventListener();
+                    clearInterval(this.timerInterval);
+                } else if (m == NaN || s == NaN) clearInterval(this.timerInterval);
+                else {
+                    document.getElementById('timer').textContent = m.toString() + ":" + s.toString();
+                    let percent = m / 30 * 100;
+                    document.getElementById('apTimerMovement').style.width = percent + "%";
+                }
+            } catch (e) {
             }
-            document.getElementById('timer').innerHTML = m + ":" + s;
-            let percent = m / 30 * 100;
-            document.getElementById('apTimerMovement').style.width = percent + "%";
-            await $20b4a97a61b3fccb$export$e772c8ff12451969(500);
-            return this.startTimer();
-        } catch (e) {
-        }
+        }, 100);
     }
-    static checkSecond(sec) {
+    static formatSeconds(sec) {
         if (sec < 10 && sec >= 0) sec = "0" + sec;
         if (sec < 0) sec = "59";
         return sec;
     }
     closeWidget() {
-        this.requestStatus = $20b4a97a61b3fccb$export$b9ca24a255e1ad7a.INITIALIZING;
+        this.requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.INITIALIZING;
         if (this.modal) {
             this.modal.classList.remove('visible');
             this.$modal = null;
         }
-        if (this.interval) clearInterval(this.interval);
-        this.cancel = true;
+        if (this.checkTransactionInterval) clearInterval(this.checkTransactionInterval);
+        if (this.timerInterval) clearInterval(this.timerInterval);
+        this.timeExpired = false;
+        this.success = false;
     }
     on(event, listener) {
         if (!(event in this.events)) this.events[event] = [];
+        if (event === 'apay-regenerate-widget' && this.events[event].length > 0) throw Error(`Cannot listen to apay-regenerate-widget event twice`);
         this.events[event].push(listener);
     }
     emit(event, ...args) {
@@ -324,7 +399,7 @@ class $4fa36e821943b400$export$defd62c0a9a12f72 {
         );
     }
 }
-module.exports = $4fa36e821943b400$export$defd62c0a9a12f72;
+module.exports = $debc315a2be2d942$export$defd62c0a9a12f72;
 
 
 //# sourceMappingURL=main.js.map

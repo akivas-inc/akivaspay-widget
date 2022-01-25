@@ -18,18 +18,27 @@ const AkivasPayWidget = require('akivaspay-widget')
 // create an instance of akivaspay widget
 const widget = new AkivasPayWidget(
     'YOUR_SHOP_SUBSCRIPTION_KEY',
-    'YOUR_LOCALE' // locale can be either **en** or **fr**
+    'en' // by default locale is set to en if you want your widget to be in french set the locale param to fr
 );
 
-// subscribe to apay-transaction event to receive the transaction data when the purchase is done
-widget.on('apay-transaction', (data) => {
-    console.log(data);
+// subscribe to apay-transaction-success event to receive the transaction data when the purchase is done
+widget.on('apay-transaction-success', (transaction) => {
+    console.log(transaction);
+})
+
+// subscribe to apay-regenerate-widget event to generate a new widget when the old one expired
+widget.on('apay-regenerate-widget', () => {
+    widget.regenerate(
+        'Pen', 
+        'NEW_EXTERNAL_ID', // new external id
+        '100' // same amount of the previous qr code amount
+    );
 })
 
 // call the widget
-widget.show(
+widget.generate(
     'Pen', // name of the qrcode
-    '1212121212', // external id to get your transaction
+    'EXTERNAL_ID', // external id to get your transaction
     '100' // amount of the qr code
 );
 ```

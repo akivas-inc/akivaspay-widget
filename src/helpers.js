@@ -1,13 +1,12 @@
+import { Localization } from "./translations.js";
+
 const STATUS_OF_REQUEST = Object.freeze({
     INITIALIZING: 'initializing',
     WAITING: 'waiting',
     LOADING: 'loading',
     FAILED: 'failed',
+    SUCCESS: 'success'
 });
-
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const supported_locales = ['en', 'fr'];
 const fallback_locale = 'en';
@@ -41,11 +40,50 @@ class Response {
     }
 }
 
+const widgetHeader = (content = '') => `
+    <div id="apBoxHeader">
+        <div id="apLogo">
+            <div id="apLogoCircle">
+                <img src="https://api.apay.akivaspay.com/images/AKIVASPAY.png" alt="AkivasPay" />
+            </div>
+            <div id="apLogoText">AkivasPay</div>
+        </div>
+        ${content}
+    </div>
+`;
+
+const timerSection = (expired, requestStatus, locale) => `
+    <div id="apTimer" style="background-color: ${ expired ? 'red' : '#3cb364'}">
+        ${ 
+            expired == true ? 
+            `
+                <span id="apTimerText">
+                    <span id="apTimerText-left"> ${ Localization.get(locale, 'qr-code-expired') }</span>
+                    <span id="apTimerText-right"> 
+                        <span id="timer"></span> 
+                    </span>
+                </span>
+            ` : requestStatus == STATUS_OF_REQUEST.WAITING ?
+            `
+                <span id="apTimerMovement"></span>
+                <span id="apTimerText">
+                    <span id="apTimerText-left"> ${ Localization.get(locale, 'awaiting-payment') } </span>
+                    <span id="apTimerText-right"> 
+                        <span id="timer"></span> 
+                    </span>
+                </span>
+            ` : ''
+        }
+    </div>
+`;
+
 export {
-    sleep,
     STATUS_OF_REQUEST,
     formatCurrency,
     Response,
     supported_locales,
-    fallback_locale
+    fallback_locale,
+    widgetHeader,
+    timerSection,
+    Localization
 }

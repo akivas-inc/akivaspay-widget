@@ -4,11 +4,6 @@
   "description": "It's a widget that can be embedded in every website to accept akivasPay payments.",
   "source": "src/index.js",
   "main": "dist/main.js",
-<<<<<<< HEAD
-  "module": "dist/module.js",
-  "style": "dist/index.css",
-=======
->>>>>>> 7f3dd3246f2e9bfb843fcf3b6ba7cabf5e2939e5
   "scripts": {
     "watch": "parcel watch",
     "build": "parcel build",
@@ -25,12 +20,14 @@
     "akivaspay",
     "apay"
   ],
-  "author": "Jordy Parker",
+  "author": "Akivas Inc",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/akivas-inc/akivaspay-widget/issues"
   },
   "homepage": "https://github.com/akivas-inc/akivaspay-widget#readme",
+  "dependencies": {
+  },
   "devDependencies": {
     "parcel": "^2.2.1"
   }

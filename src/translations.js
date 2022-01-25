@@ -6,6 +6,7 @@ const translations = {
         "how-to-pay": "How do i pay?",
         "awaiting-payment": "Awaiting Payment ...",
         "successful-purchase-msg": "The payment has been successfully completed",
+        "regenerate": "regenerate"
     },
     "fr": {
         "qr-code-expired": "Le Qrcode a expiré",
@@ -14,6 +15,7 @@ const translations = {
         "how-to-pay": "Comment payer ?",
         "awaiting-payment": "En attente de paiement...",
         "successful-purchase-msg": "Le paiement a été effectué avec succès",
+        "regenerate": "régénérer"
     }
 };
 

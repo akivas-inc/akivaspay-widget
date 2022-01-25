@@ -22,6 +22,14 @@
   overflow: hidden;
   border: none;
 }
+.apay-qr-name { 
+  max-width: 280px;
+  min-width: 280px;
+  font-weight: 500;
+  font-size: 16px;
+  text-align:center;
+  margin: 5px auto 0;
+}
 #apBoxHeader {
   height: 10%;
   border-bottom: 1px solid #f4f4f4;
@@ -29,7 +37,6 @@
 }
 #apLogo {
   height: 50px;
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: left;
@@ -42,19 +49,21 @@
   overflow: hidden;
   padding: 4px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 #apLogoCircle img {
   width: 100%;
 }
 #apLogoText {
-  padding: 1px 0px 5px 5px;
+  padding-left: 5px;
   color: white;
   font-size: 20px;
   font-weight: 500;
 }
 #apTimer {
-  background-color: #3cb364;
-  padding: 1px;
+  padding: 1px 2px;
   margin: 0px;
   position: relative;
 }
@@ -124,14 +133,21 @@
 #apQrcodeBox img {
   margin: 0 auto;
   display: block;
+  width: 180px;
+  height: 180px;
   box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.071);
 }
-#htp {
-  padding: 5px;
+#apQrcodeBox span {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 180px;
 }
 #howToPay {
   font-size: 13px;
-  margin: 0 auto;
+  margin: 0 auto 8px;
   display: block;
   text-align: center;
   text-decoration: underline dotted;
@@ -142,14 +158,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .apay-button {
   background-color: #26c165;
   border: none;
   padding: 10px 20px;
   display: block;
-  width: 80%;
-  margin: 10px auto;
+  width: 70%;
+  margin-top: 1px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
   color: white;
   font-size: 13px;
@@ -169,7 +191,8 @@
   font-size: 13px;
   font-weight: 600;
   border-radius: 3px;
-  margin-top: 10px;
+  margin: 10px auto 0;
+  text-decoration: none !important;
 }
 /* MODAL*/
 .akivas-pay-modal {
@@ -183,7 +206,6 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  cursor: pointer;
   visibility: hidden;
   opacity: 0;
   background: var(--black);
@@ -199,11 +221,9 @@
   position: relative;
   width: 300px;
   max-height: 80vh;
-  overflow: hidden;
   border-radius: 5px;
   background: var(--white);
   overflow: auto;
-  cursor: default;
 }
 #apay-close-btn {
   position: absolute;
@@ -231,7 +251,7 @@
 }
 [data-animation].visible .apay-widget {
   opacity: 1;
-  transition-delay: 0.2s;
+  transition-delay: all 0.5s;
 }
 [data-animation="slideInOutDown"] .apay-widget {
   transform: translateY(100%);
@@ -335,6 +355,15 @@
   height: 115px;
   padding-top: 10px;
   margin: 0 auto;
+}
+.apay-time-expired-content {
+  width: 80%;
+  height: 300px;
+  padding-top: 10px;
+  margin: 0 auto;
+}
+.apay-time-expired-content #apay-regenerate {
+  margin-top: 30px;
 }
 .apay-success-checkmark .check-icon {
   width: 80px;
@@ -471,6 +500,16 @@
     right: 8px;
     top: 38px;
   }
+}
+.apay-overflow-scroll-container::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.apay-overflow-scroll-container::-webkit-scrollbar-track{
+  background-color: rgb(38, 193, 101, 0.3);
+}
+.apay-overflow-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #26c165;
 }
 
 /*# sourceMappingURL=index.2f0274cc.css.map */

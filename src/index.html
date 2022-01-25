@@ -10,11 +10,21 @@
     import AkivasPayWidget from "./../dist/main.js"
 
     const widget = new AkivasPayWidget(
-      'apayo3qglb76hpitvymz9w5ks2jac810d'
+      'apayxr5qvh4i823asczm1ewkjp6ofgdbt'
     );
 
+    widget.on('apay-regenerate-widget', () => {
+      console.log('regeggggg')
+      widget.regenerate('pen', 'sdsdsdsdsdsd', '50');
+    })
+
+    widget.on('apay-transaction-success', (transaction) => {
+      console.log(transaction);
+    })
+
     document.getElementById('apay').addEventListener('click', () => {
-      widget.show('pen', 'sdsdsdsdsdsd', '1000')
-    })    
+      widget.generate('pen', 'sdsdsdsdsdsd', '50');
+    }) 
+
   </script>
 </html>
