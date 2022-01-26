@@ -174,7 +174,7 @@ export class AkivasPayWidget {
                         <div id="apQrcodeBox">
                             <img src="${_(this).widgetData.image}" alt="qrcode" style="visibility: ${(!_(this).timeExpired && _(this).requestStatus === STATUS_OF_REQUEST.WAITING) ? 'visible' : 'hidden'}"/>
                         </div>
-                        <a id="howToPay" href="https://test.akivaspay.com/client-documentation/web-payment" target="_blank">${ _(this).localization.get('how-to-pay') }</a>
+                        <a id="howToPay" href="https://akivaspay.com/client-documentation/web-payment" target="_blank">${ _(this).localization.get('how-to-pay') }</a>
                         <a href="${_(this).widgetData.link}" class="apay-button" target="_blank">
                             ${ _(this).localization.get('open-in-wallet') }
                         </a>
@@ -280,7 +280,6 @@ export class AkivasPayWidget {
             
             if (response.status == 200) {
                 response.json().then((json) => {
-                    console.log(json);
                     if (json.success == true) {
                         _(this).success = true;
                         _(this).timeExpired = false;
@@ -320,7 +319,6 @@ export class AkivasPayWidget {
                 if (_(this).success) {
                     clearInterval(_(this).timerInterval);
                 }
-                console.log(m,s)
                 if (m < 0 || ( m === 0 && s === '00')) {
                     clearInterval(_(this).timerInterval);
                     _(this).timeExpired = true;
@@ -350,7 +348,6 @@ export class AkivasPayWidget {
     }
 
     closeWidget() {
-        console.log(_(this));
         _(this).requestStatus = STATUS_OF_REQUEST.CANCEL;
         _(this).modal.classList.remove('visible');
 

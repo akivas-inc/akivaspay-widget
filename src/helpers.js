@@ -45,7 +45,9 @@ const widgetHeader = (content = '') => `
     <div id="apBoxHeader">
         <div id="apLogo">
             <div id="apLogoCircle">
-                <img src="https://api.apay.akivaspay.com/images/AKIVASPAY.png" alt="AkivasPay" />
+                <a href="https://akivaspay.com" target="_blank">
+                    <img src="https://akivaspay.com/images/AKIVASPAY.png" alt="AkivasPay" />
+                </a>
             </div>
             <div id="apLogoText">AkivasPay</div>
         </div>
