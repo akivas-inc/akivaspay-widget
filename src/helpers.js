@@ -53,13 +53,13 @@ const widgetHeader = (content = '') => `
     </div>
 `;
 
-const timerSection = (expired, requestStatus, locale) => `
+const timerSection = (expired, requestStatus, localization) => `
     <div id="apTimer" style="background-color: ${ expired ? 'red' : '#3cb364'}">
         ${ 
             expired == true ? 
             `
                 <span id="apTimerText">
-                    <span id="apTimerText-left"> ${ Localization.get(locale, 'qr-code-expired') }</span>
+                    <span id="apTimerText-left"> ${ localization.get('qr-code-expired') }</span>
                     <span id="apTimerText-right"> 
                         <span id="timer"></span> 
                     </span>
@@ -68,7 +68,7 @@ const timerSection = (expired, requestStatus, locale) => `
             `
                 <span id="apTimerMovement"></span>
                 <span id="apTimerText">
-                    <span id="apTimerText-left"> ${ Localization.get(locale, 'awaiting-payment') } </span>
+                    <span id="apTimerText-left"> ${ localization.get('awaiting-payment') } </span>
                     <span id="apTimerText-right"> 
                         <span id="timer"></span> 
                     </span>

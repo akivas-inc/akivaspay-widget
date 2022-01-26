@@ -13,7 +13,9 @@ const $0d8a3a7d0b18547c$var$translations = {
         "how-to-pay": "How do i pay?",
         "awaiting-payment": "Awaiting Payment ...",
         "successful-purchase-msg": "The payment has been successfully completed",
-        "regenerate": "regenerate"
+        "regenerate": "regenerate",
+        "failed-to-fetch": "The widget failed to load, check your Internet connection.",
+        "unknow-error-message": "Something went wrong, please try again later"
     },
     "fr": {
         "qr-code-expired": "Le Qrcode a expiré",
@@ -22,12 +24,17 @@ const $0d8a3a7d0b18547c$var$translations = {
         "how-to-pay": "Comment payer ?",
         "awaiting-payment": "En attente de paiement...",
         "successful-purchase-msg": "Le paiement a été effectué avec succès",
-        "regenerate": "régénérer"
+        "regenerate": "régénérer",
+        "failed-to-fetch": "Le chargement du widget a échoué, vérifiez votre connexion Internet.",
+        "unknow-error-message": "Quelque chose s'est mal passé, veuillez réessayer plus tard"
     }
 };
 class $0d8a3a7d0b18547c$export$b6fc69901997e05 {
-    static get(locale, key) {
-        return $0d8a3a7d0b18547c$var$translations[locale][key];
+    constructor(locale){
+        this.locale = locale;
+    }
+    get(key) {
+        return $0d8a3a7d0b18547c$var$translations[this.locale][key];
     }
 }
 
@@ -89,11 +96,11 @@ const $2657731041a91f20$export$1cf57cfcc6726c1e = (content = '')=>`
     </div>
 `
 ;
-const $2657731041a91f20$export$c31d0b96a47b16ab = (expired, requestStatus, locale)=>`
+const $2657731041a91f20$export$c31d0b96a47b16ab = (expired, requestStatus, localization)=>`
     <div id="apTimer" style="background-color: ${expired ? 'red' : '#3cb364'}">
         ${expired == true ? `
                 <span id="apTimerText">
-                    <span id="apTimerText-left"> ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(locale, 'qr-code-expired')}</span>
+                    <span id="apTimerText-left"> ${localization.get('qr-code-expired')}</span>
                     <span id="apTimerText-right"> 
                         <span id="timer"></span> 
                     </span>
@@ -101,7 +108,7 @@ const $2657731041a91f20$export$c31d0b96a47b16ab = (expired, requestStatus, local
             ` : requestStatus == $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING ? `
                 <span id="apTimerMovement"></span>
                 <span id="apTimerText">
-                    <span id="apTimerText-left"> ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get(locale, 'awaiting-payment')} </span>
+                    <span id="apTimerText-left"> ${localization.get('awaiting-payment')} </span>
                     <span id="apTimerText-right"> 
                         <span id="timer"></span> 
                     </span>
@@ -130,17 +137,17 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
     constructor(shopSubscriptionKey, locale = $2657731041a91f20$export$66c8564ff9f24ca2){
         $debc315a2be2d942$var$_(this).shopSubscriptionKey = shopSubscriptionKey;
         $debc315a2be2d942$var$_(this).baseUrl = "https://api.apay.akivaspay.com/";
-        $debc315a2be2d942$var$_(this).shopSubscriptionKey;
         $debc315a2be2d942$var$_(this).success = false;
         $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.NOT_STARTED;
         $debc315a2be2d942$var$_(this).timeExpired = false;
         $debc315a2be2d942$var$_(this).errorMessage = '';
-        $debc315a2be2d942$var$_(this).locale;
+        $debc315a2be2d942$var$_(this).locale = locale;
         $debc315a2be2d942$var$_(this).apayContainer;
         $debc315a2be2d942$var$_(this).modal;
         $debc315a2be2d942$var$_(this).widgetData = new $2657731041a91f20$export$f0c6ea3788805e53();
         $debc315a2be2d942$var$_(this).checkTransactionInterval;
         $debc315a2be2d942$var$_(this).timerInterval;
+        $debc315a2be2d942$var$_(this).localization = new $0d8a3a7d0b18547c$export$b6fc69901997e05(locale);
         $debc315a2be2d942$var$_(this).events = {
             'apay-transaction-success': []
         };
@@ -192,34 +199,41 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
             "amount": amount,
             "description": description
         };
-        const response = await fetch($debc315a2be2d942$var$_(this).baseUrl + 'generate/qrcode', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Accept-Language": $debc315a2be2d942$var$_(this).locale,
-                "Shop-Subscription-Key": $debc315a2be2d942$var$_(this).shopSubscriptionKey
-            },
-            body: JSON.stringify(data)
-        });
-        if (response.ok) response.json().then((json)=>{
-            $debc315a2be2d942$var$_(this).widgetData = new $2657731041a91f20$export$f0c6ea3788805e53(json.image, json.domain, json.link, name, amount, description, external_id);
-            $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING;
-            this.updateWidget();
-            var timer = document.getElementById('timer');
-            timer.textContent = "30:0";
-            this.startTimer();
-            this.checkTransactionStatus(json.uuid).then();
-        });
-        else response.json().then((json)=>{
+        try {
+            const response = await fetch($debc315a2be2d942$var$_(this).baseUrl + 'generate/qrcode', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Accept-Language": $debc315a2be2d942$var$_(this).locale,
+                    "Shop-Subscription-Key": $debc315a2be2d942$var$_(this).shopSubscriptionKey
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) response.json().then((json)=>{
+                $debc315a2be2d942$var$_(this).widgetData = new $2657731041a91f20$export$f0c6ea3788805e53(json.image, json.domain, json.link, name, amount, description, external_id);
+                $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING;
+                this.updateWidget();
+                var timer = document.getElementById('timer');
+                timer.textContent = "30:0";
+                this.startTimer();
+                this.checkTransactionStatus(json.uuid);
+            });
+            else response.json().then((json)=>{
+                $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.FAILED;
+                $debc315a2be2d942$var$_(this).errorMessage = json.message;
+                this.updateWidget();
+            });
+        } catch (e) {
+            if (e.message === 'Failed to fetch') $debc315a2be2d942$var$_(this).errorMessage = $debc315a2be2d942$var$_(this).localization.get('failed-to-fetch');
+            else $debc315a2be2d942$var$_(this).errorMessage = $debc315a2be2d942$var$_(this).localization.get('unknow-error-message');
             $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.FAILED;
-            $debc315a2be2d942$var$_(this).errorMessage = json.message;
             this.updateWidget();
-        });
+        }
     }
     getWidget() {
-        const timerHTML = $2657731041a91f20$export$c31d0b96a47b16ab($debc315a2be2d942$var$_(this).timeExpired, $debc315a2be2d942$var$_(this).requestStatus, $debc315a2be2d942$var$_(this).locale);
-        var $content = `
+        const timerHTML = $2657731041a91f20$export$c31d0b96a47b16ab($debc315a2be2d942$var$_(this).timeExpired, $debc315a2be2d942$var$_(this).requestStatus, $debc315a2be2d942$var$_(this).localization);
+        let $content = `
             <div class="apay-center-content" style="visibility: ${$debc315a2be2d942$var$_(this).requestStatus === $2657731041a91f20$export$b9ca24a255e1ad7a.LOADING ? 'visible' : 'hidden'}">
                 <div id="apay-loading"></div>
             </div>
@@ -232,13 +246,11 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
                     <div id="apPrice">
                         <div>
                             <p id="apScantoPayText" style="font-weight: 400; color: 989898">
-                                ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get($debc315a2be2d942$var$_(this).locale, 'scan-to-pay')}
+                                ${$debc315a2be2d942$var$_(this).localization.get('scan-to-pay')}
                             </p>
                     
                             <p id="apTo" style="font-weight: 300">
-                                <strong style="font-weight: 400; color: 607d8b"
-                                >${$debc315a2be2d942$var$_(this).widgetData.domain}</strong
-                                >
+                                <strong style="font-weight: 400; color: 607d8b">${$debc315a2be2d942$var$_(this).widgetData.domain}</strong>
                             </p>
                         </div>
                         <div style="color: black">
@@ -251,9 +263,9 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
                         <div id="apQrcodeBox">
                             <img src="${$debc315a2be2d942$var$_(this).widgetData.image}" alt="qrcode" style="visibility: ${!$debc315a2be2d942$var$_(this).timeExpired && $debc315a2be2d942$var$_(this).requestStatus === $2657731041a91f20$export$b9ca24a255e1ad7a.WAITING ? 'visible' : 'hidden'}"/>
                         </div>
-                        <a id="howToPay" href="https://test.akivaspay.com/client-documentation/web-payment" target="_blank">${$0d8a3a7d0b18547c$export$b6fc69901997e05.get($debc315a2be2d942$var$_(this).locale, 'how-to-pay')}</a>
+                        <a id="howToPay" href="https://test.akivaspay.com/client-documentation/web-payment" target="_blank">${$debc315a2be2d942$var$_(this).localization.get('how-to-pay')}</a>
                         <a href="${$debc315a2be2d942$var$_(this).widgetData.link}" class="apay-button" target="_blank">
-                            ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get($debc315a2be2d942$var$_(this).locale, 'open-in-wallet')}
+                            ${$debc315a2be2d942$var$_(this).localization.get('open-in-wallet')}
                         </a>
                         <br />
                     </div>
@@ -288,7 +300,7 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
                         <div id="apPrice">
                             <div>
                                 <p id="apScantoPayText" style="font-weight: 400; color: 989898">
-                                    ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get($debc315a2be2d942$var$_(this).locale, 'scan-to-pay')}
+                                    ${$debc315a2be2d942$var$_(this).localization.get('scan-to-pay')}
                                 </p>
                         
                                 <p id="apTo" style="font-weight: 300">
@@ -298,24 +310,25 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
                                 </p>
                             </div>
                             <div style="color: black">
-                                <span style="font-size: 20px; font-weight: 400"> ${$2657731041a91f20$export$3dc27271f5d5c629(this.widgetData.amount)}</span>
+                                <span style="font-size: 20px; font-weight: 400"> ${$2657731041a91f20$export$3dc27271f5d5c629($debc315a2be2d942$var$_(this).widgetData.amount)}</span>
                                 <sup style="font-weight: 500">FCFA</sup>
                             </div>
                         </div>
                         <div id="apBoxBody">
                             <div id="apQrcodeBox">
                                 <span style="color: red;">
-                                    ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get($debc315a2be2d942$var$_(this).locale, 'qr-code-expired')}
+                                    ${$debc315a2be2d942$var$_(this).localization.get('qr-code-expired')}
                                 </span>
                             </div>
                             <a href="#" id="apay-regenerate" class="apay-button">
-                                ${$0d8a3a7d0b18547c$export$b6fc69901997e05.get($debc315a2be2d942$var$_(this).locale, 'regenerate')}
+                                ${$debc315a2be2d942$var$_(this).localization.get('regenerate')}
                             </a>
                             <br />
                         </div>
                     </div>
                 </div>
             `;
+        else if ($debc315a2be2d942$var$_(this).requestStatus == $2657731041a91f20$export$b9ca24a255e1ad7a.CANCEL) return '';
         return `
             <div>
                 <button id="apay-close-btn" class="apay-close-widget">
@@ -329,10 +342,10 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
             </div>
         `;
     }
-    async checkTransactionStatus(uuid) {
-        this.checkTransactionInterval = setInterval(async ()=>{
-            if ($debc315a2be2d942$var$_(this).timeExpired && this.checkTransactionInterval !== null) {
-                clearInterval(this.checkTransactionInterval);
+    checkTransactionStatus(uuid) {
+        $debc315a2be2d942$var$_(this).checkTransactionInterval = setInterval(async ()=>{
+            if ($debc315a2be2d942$var$_(this).timeExpired && $debc315a2be2d942$var$_(this).checkTransactionInterval !== null) {
+                clearInterval($debc315a2be2d942$var$_(this).checkTransactionInterval);
                 return;
             }
             var response = await fetch($debc315a2be2d942$var$_(this).baseUrl + 'find/transaction/' + uuid + "?filter_by=uuid", {
@@ -345,25 +358,26 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
                 }
             });
             if (response.status == 200) response.json().then((json)=>{
+                console.log(json);
                 if (json.success == true) {
                     $debc315a2be2d942$var$_(this).success = true;
                     $debc315a2be2d942$var$_(this).timeExpired = false;
                     $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.SUCCESS;
                     this.updateWidget();
                     this.emit('apay-transaction-success', json.transaction);
-                    clearInterval(this.checkTransactionInterval);
+                    clearInterval($debc315a2be2d942$var$_(this).checkTransactionInterval);
                 }
             });
             else response.json().then((json)=>{
                 $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.FAILED;
                 $debc315a2be2d942$var$_(this).errorMessage = json.message;
                 this.updateWidget();
-                clearInterval(this.checkTransactionInterval);
+                clearInterval($debc315a2be2d942$var$_(this).checkTransactionInterval);
             });
         }, 2500);
     }
     startTimer() {
-        this.timerInterval = setInterval(()=>{
+        $debc315a2be2d942$var$_(this).timerInterval = setInterval(()=>{
             try {
                 let timer = document.getElementById('timer').innerHTML;
                 let timeArray = timer.split(/[:]+/);
@@ -371,21 +385,21 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
                 let s = $debc315a2be2d942$export$defd62c0a9a12f72.formatSeconds(parseInt(timeArray[1] - 1));
                 if (s === '59') m = m - 1;
                 if ($debc315a2be2d942$var$_(this).success) clearInterval($debc315a2be2d942$var$_(this).timerInterval);
+                console.log(m, s);
                 if (m < 0 || m === 0 && s === '00') {
-                    $debc315a2be2d942$var$_(this).timeExpired = true;
-                    document.getElementById('timer').textContent = "";
-                    this.updateWidget();
-                    this.regenerateCodeClickEventListener();
                     clearInterval($debc315a2be2d942$var$_(this).timerInterval);
-                } else if (m == NaN || s == NaN) clearInterval($debc315a2be2d942$var$_(this).timerInterval);
-                else {
+                    $debc315a2be2d942$var$_(this).timeExpired = true;
+                    this.updateWidget();
+                    document.getElementById('timer').textContent = "";
+                    this.regenerateCodeClickEventListener();
+                } else {
                     document.getElementById('timer').textContent = m.toString() + ":" + s.toString();
                     let percent = m / 30 * 100;
                     document.getElementById('apTimerMovement').style.width = percent + "%";
                 }
             } catch (e) {
             }
-        }, 100);
+        }, 800);
     }
     static formatSeconds(sec) {
         if (sec < 10 && sec >= 0) sec = "0" + sec;
@@ -395,14 +409,14 @@ class $debc315a2be2d942$export$defd62c0a9a12f72 {
     closeWidget() {
         console.log($debc315a2be2d942$var$_(this));
         $debc315a2be2d942$var$_(this).requestStatus = $2657731041a91f20$export$b9ca24a255e1ad7a.CANCEL;
-        if ($debc315a2be2d942$var$_(this).modal) {
-            $debc315a2be2d942$var$_(this).modal.classList.remove('visible');
-            $debc315a2be2d942$var$_(this).modal = null;
-        }
+        $debc315a2be2d942$var$_(this).modal.classList.remove('visible');
         if ($debc315a2be2d942$var$_(this).checkTransactionInterval) clearInterval($debc315a2be2d942$var$_(this).checkTransactionInterval);
         if ($debc315a2be2d942$var$_(this).timerInterval) clearInterval($debc315a2be2d942$var$_(this).timerInterval);
         $debc315a2be2d942$var$_(this).timeExpired = false;
         $debc315a2be2d942$var$_(this).success = false;
+        setTimeout(()=>{
+            $debc315a2be2d942$var$_(this).modal.innerHTML = '';
+        }, 1000);
     }
     on(event, listener) {
         if (!(event in $debc315a2be2d942$var$_(this).events)) $debc315a2be2d942$var$_(this).events[event] = [];

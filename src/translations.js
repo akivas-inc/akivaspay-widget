@@ -6,7 +6,9 @@ const translations = {
         "how-to-pay": "How do i pay?",
         "awaiting-payment": "Awaiting Payment ...",
         "successful-purchase-msg": "The payment has been successfully completed",
-        "regenerate": "regenerate"
+        "regenerate": "regenerate",
+        "failed-to-fetch": "The widget failed to load, check your Internet connection.",
+        "unknow-error-message": "Something went wrong, please try again later"
     },
     "fr": {
         "qr-code-expired": "Le Qrcode a expiré",
@@ -15,12 +17,18 @@ const translations = {
         "how-to-pay": "Comment payer ?",
         "awaiting-payment": "En attente de paiement...",
         "successful-purchase-msg": "Le paiement a été effectué avec succès",
-        "regenerate": "régénérer"
+        "regenerate": "régénérer",
+        "failed-to-fetch": "Le chargement du widget a échoué, vérifiez votre connexion Internet.",
+        "unknow-error-message": "Quelque chose s'est mal passé, veuillez réessayer plus tard"
     }
 };
 
 export class Localization {
-    static get(locale, key){
-        return translations[locale][key];
+    constructor(locale) {
+        this.locale = locale;
+    }
+
+    get(key){
+        return translations[this.locale][key];
     }
 }
